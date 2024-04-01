@@ -57,22 +57,22 @@ notesROUTE.post('/', async (req, res) => {
 
 // DELETE Route
 notesROUTE.delete('/:note_id', async (req, res) => {
-  const note_id = req.params.note_id;
-  console.info(`notes ${req.method} for id ${note_id} request received`);
-
-  try {
-    const data = await readFromFile('./db/db.json');
-    const json = JSON.parse(data);
-    // filter out the new note
-    const result = json.filter((note) => note.note_id !== note_id);
-
-    writeToFile('./db/db.json', result);
-
-    res.json('Note deleted');
-  } catch (err) {
-    console.error(err);
-    res.status(500).json('Error in deleting note');
-  }
-});
+    const note_id = req.params.note_id;
+    console.info(`notes ${req.method} for id ${note_id} request received`);
+  
+    try {
+      const data = await readFromFile('./db/db.json');
+      const json = JSON.parse(data);
+      // filter out the note to delete
+      const result = json.filter((note) => note.note_id !== note_id);
+  
+      await writeToFile('./db/db.json', JSON.stringify(result));
+  
+      res.json('Note deleted');
+    } catch (err) {
+      console.error(err);
+      res.status(500).json('Error in deleting note');
+    }
+  });
 
 module.exports = notesROUTE;
