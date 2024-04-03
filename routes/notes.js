@@ -1,9 +1,9 @@
-const notesROUTE = require('express').Router();
+const notesRoute = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../helpers/fsUtils');
 const { v4: uuidv4 } = require('uuid');
 
 // GET Routes
-notesROUTE.get('/', async (req, res) => {
+notesRoute.get('/', async (req, res) => {
   console.info(`notes ${req.method} request received`);
   try {
     const data = await readFromFile('./db/db.json');
@@ -14,7 +14,7 @@ notesROUTE.get('/', async (req, res) => {
   }
 });
 
-notesROUTE.get('/:note_id', async (req, res) => {
+notesRoute.get('/:note_id', async (req, res) => {
   const note_id = req.params.note_id;
   console.info(`notes ${req.method}  for id ${note_id} request received`);
   try {
@@ -31,7 +31,7 @@ notesROUTE.get('/:note_id', async (req, res) => {
 });
 
 // POST Route 
-notesROUTE.post('/', async (req, res) => {
+notesRoute.post('/', async (req, res) => {
   console.info(`notes ${req.method} request received`);
 
   const { title, text } = req.body;
@@ -56,14 +56,14 @@ notesROUTE.post('/', async (req, res) => {
 });
 
 // DELETE Route
-notesROUTE.delete('/:note_id', async (req, res) => {
+notesRoute.delete('/:note_id', async (req, res) => {
     const note_id = req.params.note_id;
     console.info(`notes ${req.method} for id ${note_id} request received`);
   
     try {
       const data = await readFromFile('./db/db.json');
       const json = JSON.parse(data);
-      // filter out the note to delete
+    
       const result = json.filter((note) => note.note_id !== note_id);
   
       await writeToFile('./db/db.json', JSON.stringify(result));
@@ -75,4 +75,4 @@ notesROUTE.delete('/:note_id', async (req, res) => {
     }
   });
 
-module.exports = notesROUTE;
+  module.exports = notesRoute;
