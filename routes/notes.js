@@ -9,6 +9,7 @@ notesRoute.get('/', async (req, res) => {
     const data = await readFromFile('./db/db.json', 'utf8');
     console.info(data);
     res.json(JSON.parse(data));
+    console.info(data);
   } catch (err) {
     console.error(err);
     res.status(500).json('Error reading file');
@@ -67,7 +68,7 @@ notesRoute.delete('/:note_id', async (req, res) => {
     
       const result = json.filter((note) => note.note_id !== note_id);
   
-      await writeToFile('./db/db.json', JSON.stringify(result));
+      await writeToFile('./db/db.json', result);
   
       res.json('Note deleted');
     } catch (err) {

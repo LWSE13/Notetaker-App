@@ -1,1 +1,16 @@
-"[{\"title\":\"Test Title\",\"text\":\"Test text\"}]"
+[
+    {
+        "title": "Test Title",
+        "text": "Test text"
+    },
+    {
+        "title": "testing",
+        "text": "please work",
+        "note_id": "47336018-2c6c-4c85-bec9-602ac4324866"
+    },
+    {
+        "title": "hi",
+        "text": "hello",
+        "note_id": "0d37bb8b-1d64-4a58-bfcc-fa1d3f385774"
+    }
+]
