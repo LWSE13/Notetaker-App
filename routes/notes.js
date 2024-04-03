@@ -6,7 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 notesRoute.get('/', async (req, res) => {
   console.info(`notes ${req.method} request received`);
   try {
-    const data = await readFromFile('./db/db.json');
+    const data = await readFromFile('./db/db.json', 'utf8');
+    console.info(data);
     res.json(JSON.parse(data));
   } catch (err) {
     console.error(err);
@@ -18,7 +19,7 @@ notesRoute.get('/:note_id', async (req, res) => {
   const note_id = req.params.note_id;
   console.info(`notes ${req.method}  for id ${note_id} request received`);
   try {
-    const data = await readFromFile('./db/db.json');
+    const data = await readFromFile('./db/db.json', 'utf8');
     const json = JSON.parse(data);
     const result = json.filter((note) => note.note_id === note_id);
     return result.length > 0
@@ -44,7 +45,7 @@ notesRoute.post('/', async (req, res) => {
     };
 
     try {
-      await readAndAppend(newNote, './db/db.json');
+      await readAndAppend(newNote, './db/db.json', 'utf8');
       res.json('Note added');
     } catch (err) {
       console.error(err);
@@ -61,7 +62,7 @@ notesRoute.delete('/:note_id', async (req, res) => {
     console.info(`notes ${req.method} for id ${note_id} request received`);
   
     try {
-      const data = await readFromFile('./db/db.json');
+      const data = await readFromFile('./db/db.json', 'utf8');
       const json = JSON.parse(data);
     
       const result = json.filter((note) => note.note_id !== note_id);
