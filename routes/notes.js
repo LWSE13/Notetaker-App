@@ -7,16 +7,14 @@ notesRoute.get('/', async (req, res) => {
   console.info(`notes ${req.method} request received`);
   try {
     const data = await readFromFile('./db/db.json', 'utf8');
-    console.info(data);
     res.json(JSON.parse(data));
-    console.info(data);
   } catch (err) {
     console.error(err);
     res.status(500).json('Error reading file');
   }
 });
 
-notesRoute.get('/:note_id', async (req, res) => {
+notesRoute.get('/note_id', async (req, res) => {
   const note_id = req.params.note_id;
   console.info(`notes ${req.method}  for id ${note_id} request received`);
   try {
@@ -42,7 +40,7 @@ notesRoute.post('/', async (req, res) => {
     const newNote = {
       title,
       text,
-      note_id: uuidv4(),
+      id: uuidv4(),
     };
 
     try {
